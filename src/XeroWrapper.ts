@@ -8,6 +8,14 @@ type InitParamsType = {
     loggerFunction?: LoggerFunctionType
 }
 
+/**
+ * Time prior to the actual token expiry that the Xero client should request a new token
+ * Helps to ensure that a series of Xero requests won't encounter token invalidation errors
+ * 
+ * Set this to the maximum time a single series of Xero requests should take
+ */
+const EXPIRY_AHEAD_WINDOW = 30
+
 export class XeroWrapper {
     #client: XeroClient;
     #loggerFunction: LoggerFunctionType
@@ -56,7 +64,7 @@ export class XeroWrapper {
         this.#assertInit()
 
         let auth = this.#client.readTokenSet()
-        if (!auth.access_token || auth.expired()) {
+        if (!auth.access_token || (auth.expires_at + EXPIRY_AHEAD_WINDOW) * 1000 < new Date().getTime()) {
             if (!this.#refreshPromise) {
                 if (!auth.access_token) this.#log("Requesting Xero token")
                 else this.#log("Xero token expired, refreshing")
