@@ -29,7 +29,7 @@ function generatePayloadHandler(secret: string) {
             return res.end()
         }
 
-        req.body = <any><Payload>req.body.toJSON()
+        req.body = <any><Payload>JSON.parse(<any>req.body)
         next()
     }
 
@@ -42,7 +42,7 @@ function generatePayloadHandler(secret: string) {
      */
     function handlePayload(payloadBuffer: Buffer, signature: string, successCallback: (payload: Payload) => any, failCallback: Function) {
         if (hashPayload(payloadBuffer) === signature) {
-            successCallback(payloadBuffer.toJSON())
+            successCallback(<Payload>JSON.parse(<any>Buffer))
         } else {
             failCallback()
         }
