@@ -29,6 +29,7 @@ function generatePayloadHandler(secret: string) {
             return res.end()
         }
 
+        req.body = <any><Payload>req.body.toJSON()
         next()
     }
 
