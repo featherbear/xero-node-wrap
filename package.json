@@ -1,0 +1,18 @@
+{
+  "name": "xero-node-wrap",
+  "version": "1.0.0",
+  "description": "xero-node auth wrapper",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": "git@github.com:featherbear/xero-node-wrap.git",
+  "author": "Andrew Wong <andrew.j.wong@outlook.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "xero-node": "^4.21.0"
+  }
+}
